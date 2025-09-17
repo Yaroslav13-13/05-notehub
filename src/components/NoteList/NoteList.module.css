@@ -7,25 +7,34 @@
   list-style: none;
 }
 
+/* Картка нотатки */
 .listItem {
-  background-color: #ffffff;
-  border: 1px solid #004182;
-  border-radius: 8px;
+  position: relative;
+  background: linear-gradient(135deg, #ffffff, #e6f2ff);
+  border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 180px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.listItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Заголовок нотатки */
 .title {
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 8px 0;
-  color: #212529;
+  color: #0d1b2a;
 }
 
+/* Основний контент */
 .content {
   margin: 0;
   flex-grow: 1;
@@ -38,6 +47,7 @@
   overflow: hidden;
 }
 
+/* Кнопка */
 .button {
   align-self: flex-end;
   padding: 6px 12px;
@@ -45,15 +55,17 @@
   color: #fff;
   background-color: #dc3545;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .button:hover {
   background-color: #bb2d3b;
+  transform: scale(1.05);
 }
 
+/* Футер картки: тег + кнопка */
 .footer {
   display: flex;
   justify-content: space-between;
@@ -61,9 +73,10 @@
   margin-top: auto;
 }
 
+/* Тег */
 .tag {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 4px 10px;
   font-size: 12px;
   color: #0d6efd;
   background-color: #e7f1ff;
@@ -73,4 +86,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: background-color 0.2s;
+}
+
+.tag:hover {
+  background-color: #d0e4ff;
 }

@@ -9,7 +9,7 @@
 
 .pagination li {
   border: 1px solid #dee2e6;
-  border-radius: 8px; /* закруглення більш сучасне */
+  border-radius: 8px;
   cursor: pointer;
   min-width: 40px;
   height: 40px;
