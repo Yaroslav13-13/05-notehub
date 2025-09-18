@@ -1,4 +1,4 @@
-.loaderContainer {
+/* .loaderContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,4 +21,33 @@
   100% {
     transform: rotate(360deg);
   }
+} */
+
+.loaderWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e2e8f0;
+  border-top: 5px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text {
+  font-size: 16px;
+  color: #2563eb;
 }
