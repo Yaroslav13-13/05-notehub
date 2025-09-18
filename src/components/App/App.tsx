@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Loader from "../Loader/Loader"; // імпорт компоненту
 import css from "./App.module.css";
 import SearchBox from "../SearchBox/SearchBox";
 import NoteList from "../NoteList/NoteList";
@@ -71,7 +72,7 @@ const App: React.FC = () => {
         </button>
       </header>
 
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <Loader />}
       {isError && <p>Error loading notes</p>}
 
       {(() => {

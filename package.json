@@ -17,6 +17,8 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-paginate": "^8.3.0",
+    "react-spinners": "^0.17.0",
+    "react-toastify": "^11.0.5",
     "use-debounce": "^10.0.6",
     "yup": "^1.7.0"
   },
