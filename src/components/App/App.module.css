@@ -40,7 +40,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 50px;
-  /* background: linear-gradient(#1a202c, #3f4654, #546688); */
   color: #fff;
   gap: 40px;
   margin-bottom: 40px;
@@ -48,15 +47,21 @@
 
 .title {
   flex: 1;
+  font-weight: 700;
   font-size: 36px;
   margin: 0;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.title:hover {
+  color: #0a66c2;
 }
 
 .footer {
   padding: 12px;
-  /* background: #f9fafb; */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background: linear-gradient(#546688, #3f4654, #1a202c); */
 }

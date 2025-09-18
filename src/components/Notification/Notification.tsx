@@ -4,7 +4,7 @@ import css from "./Notification.module.css";
 interface NotificationProps {
   message: string;
   onClose: () => void;
-  duration?: number; // час показу в мс
+  duration?: number;
 }
 
 const Notification: React.FC<NotificationProps> = ({
