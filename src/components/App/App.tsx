@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Loader from "../Loader/Loader"; // імпорт компоненту
+import Loader from "../Loader/Loader";
 import css from "./App.module.css";
 import SearchBox from "../SearchBox/SearchBox";
 import NoteList from "../NoteList/NoteList";
@@ -51,37 +51,44 @@ const App: React.FC = () => {
     mutationDelete.mutate(id);
   };
 
+  const notes = Array.isArray(data?.notes) ? data!.notes : [];
+  const totalPages = data?.totalPages ?? 0;
+
   return (
     <div className={css.app}>
-      <header className={css.toolbar}>
+      {/* --- HEADER --- */}
+      <header className={css.header}>
+        <h1 className={css.title}>NoteHub</h1>
         <SearchBox value={search} onChange={setSearch} />
-
-        {(() => {
-          const totalPages = data?.totalPages ?? 0;
-          return totalPages > 1 ? (
-            <Pagination
-              page={page}
-              totalPages={totalPages}
-              onPageChange={setPage}
-            />
-          ) : null;
-        })()}
-
         <button className={css.button} onClick={() => setIsModalOpen(true)}>
-          Create note +
+          + Create note
         </button>
       </header>
 
-      {isLoading && <Loader />}
-      {isError && <p>Error loading notes</p>}
+      {/* --- MAIN CONTENT --- */}
+      <main className={css.main}>
+        {isLoading && <Loader />}
+        {isError && <p>Error loading notes</p>}
 
-      {(() => {
-        const notes = Array.isArray(data?.notes) ? data!.notes : [];
-        return notes.length > 0 ? (
+        {notes.length > 0 ? (
           <NoteList notes={notes} onDelete={handleDeleteNote} />
-        ) : null;
-      })()}
+        ) : (
+          !isLoading && <p className={css.empty}>No notes found</p>
+        )}
+      </main>
 
+      {/* --- FOOTER PAGINATION --- */}
+      <footer className={css.footer}>
+        {totalPages > 1 && (
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        )}
+      </footer>
+
+      {/* --- MODAL --- */}
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <NoteForm

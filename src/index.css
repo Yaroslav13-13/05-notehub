@@ -8,13 +8,25 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* базові скидання */
+html,
 body {
+  height: 100%;
   margin: 0;
-  background-color: #ffffff;
-  color: #212529;
+  padding: 0;
   min-width: 320px;
+  background: #e2e8f0; /* фон на всю сторінку */
 }
 
-/* #root {
+/* root розтягується на весь екран */
+#root {
   min-height: 100vh;
-} */
+  display: flex;
+  flex-direction: column;
+}
+
+/* modal-root не додає відступів */
+#modal-root {
+  margin: 0;
+  padding: 0;
+}
