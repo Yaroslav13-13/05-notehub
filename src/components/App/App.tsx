@@ -250,14 +250,18 @@ const App: React.FC = () => {
     <div className={css.app}>
       {/* HEADER */}
       <header className={css.header}>
-        <a href="/index.html" className={css.title}>
-          NoteHub
-        </a>
+        <div className={css.box}>
+          <a href="/index.html" className={css.title}>
+            NoteHub
+          </a>
+        </div>
 
-        <SearchBox value={search} onChange={setSearch} />
-        <button className={css.button} onClick={() => setIsModalOpen(true)}>
-          + Create note
-        </button>
+        <div className={css.actions}>
+          <SearchBox value={search} onChange={setSearch} />
+          <button className={css.button} onClick={() => setIsModalOpen(true)}>
+            + Create note
+          </button>
+        </div>
       </header>
 
       {/* MAIN */}

@@ -46,6 +46,7 @@
 }
 
 .title {
+  display: inline-block;
   flex: 1;
   font-weight: 700;
   font-size: 36px;
@@ -64,4 +65,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 36px;
+  margin: 0;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.title:hover {
+  color: #0a66c2;
 }
