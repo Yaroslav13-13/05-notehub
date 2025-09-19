@@ -39,10 +39,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 50px;
+  padding: 25px 50px;
   color: #fff;
-  gap: 40px;
-  margin-bottom: 40px;
 }
 
 .title {
