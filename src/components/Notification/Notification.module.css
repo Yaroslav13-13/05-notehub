@@ -12,3 +12,18 @@
   opacity: 0.95;
   transition: all 0.3s ease;
 }
+
+.error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #dc3545;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-weight: 400;
+  z-index: 9999;
+  opacity: 0.95;
+  transition: all 0.3s ease;
+}
