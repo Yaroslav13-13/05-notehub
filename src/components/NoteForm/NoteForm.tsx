@@ -13,11 +13,11 @@ interface NoteFormProps {
 const noteTags: NoteTag[] = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 
 const schema = Yup.object().shape({
-  title: Yup.string().required("Введіть заголовок"),
-  content: Yup.string().required("Введіть текст"),
+  title: Yup.string().required("Enter title"),
+  content: Yup.string().required("Enter content"),
   tag: Yup.string()
-    .oneOf(noteTags, "Оберіть валідний тег")
-    .required("Введіть тег"),
+    .oneOf(noteTags, "Select a valid tag")
+    .required("Select a tag"),
 });
 
 const NoteForm: React.FC<NoteFormProps> = ({ onCreate, onCancel }) => {
@@ -33,14 +33,14 @@ const NoteForm: React.FC<NoteFormProps> = ({ onCreate, onCancel }) => {
     >
       {({ isSubmitting }) => (
         <Form className={css.form}>
-          <label>
-            Заголовок
+          <label className={css.formGroup}>
+            Title
             <Field name="title" className={css.input} />
             <ErrorMessage name="title" component="div" className={css.error} />
           </label>
 
-          <label>
-            Текст
+          <label className={css.formGroup}>
+            Content
             <Field as="textarea" name="content" className={css.textarea} />
             <ErrorMessage
               name="content"
@@ -49,9 +49,9 @@ const NoteForm: React.FC<NoteFormProps> = ({ onCreate, onCancel }) => {
             />
           </label>
 
-          <label>
-            Тег
-            <Field as="select" name="tag" className={css.input}>
+          <label className={css.formGroup}>
+            Tag
+            <Field as="select" name="tag" className={css.select}>
               {noteTags.map((tag) => (
                 <option key={tag} value={tag}>
                   {tag}
@@ -62,11 +62,19 @@ const NoteForm: React.FC<NoteFormProps> = ({ onCreate, onCancel }) => {
           </label>
 
           <div className={css.actions}>
-            <button type="submit" disabled={isSubmitting}>
-              Створити
+            <button
+              type="button"
+              onClick={onCancel}
+              className={css.cancelButton}
+            >
+              Cancel
             </button>
-            <button type="button" onClick={onCancel}>
-              Скасувати
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={css.submitButton}
+            >
+              Create
             </button>
           </div>
         </Form>
