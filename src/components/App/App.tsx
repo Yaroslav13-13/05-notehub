@@ -7,15 +7,15 @@ import NoteList from "../NoteList/NoteList";
 import Pagination from "../Pagination/Pagination";
 import Modal from "../Modal/Modal";
 import NoteForm from "../NoteForm/NoteForm";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  fetchNotes,
-  createNote,
-  deleteNote,
-  type CreateNotePayload,
-} from "../../services/noteService";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNotes } from "../../services/noteService";
 import { useDebounce } from "use-debounce";
-import type { Note, FetchNotesResponse } from "../../types/note";
+import type { Note } from "../../types/note";
+
+interface FetchNotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
 
 type NotificationType = "success" | "error";
 
@@ -27,8 +27,6 @@ const App: React.FC = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [notificationType, setNotificationType] =
     useState<NotificationType>("success");
-
-  const queryClient = useQueryClient();
 
   // ======= useQuery для нотаток =======
   const { data, isLoading, isError } = useQuery<FetchNotesResponse, Error>({
@@ -44,45 +42,8 @@ const App: React.FC = () => {
       }
       return response;
     },
+    placeholderData: (previousData) => previousData,
   });
-
-  // ======= Мутація для створення нотатки =======
-  const mutationCreate = useMutation({
-    mutationFn: createNote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-      setIsModalOpen(false);
-      setNotification("Note created successfully");
-      setNotificationType("success");
-    },
-    onError: (error: any) => {
-      setNotification(`Error creating note: ${error?.message ?? ""}`);
-      setNotificationType("error");
-    },
-  });
-
-  // ======= Мутація для видалення нотатки =======
-  const mutationDelete = useMutation({
-    mutationFn: deleteNote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-      setNotification("Note deleted successfully");
-      setNotificationType("success");
-    },
-    onError: (error: any) => {
-      setNotification(`Error deleting note: ${error?.message ?? ""}`);
-      setNotificationType("error");
-    },
-  });
-
-  // ======= Обробники =======
-  const handleCreateNote = async (note: CreateNotePayload) => {
-    await mutationCreate.mutateAsync(note);
-  };
-
-  const handleDeleteNote = (id: string) => {
-    mutationDelete.mutate(id);
-  };
 
   // ======= Данні для списку і пагінації =======
   const notes: Note[] = data?.notes ?? [];
@@ -129,9 +90,7 @@ const App: React.FC = () => {
       {/* MAIN */}
       <main className={css.main}>
         {isLoading && <Loader />}
-        {notes.length > 0 && (
-          <NoteList notes={notes} onDelete={handleDeleteNote} />
-        )}
+        {notes.length > 0 && <NoteList notes={notes} />}
       </main>
 
       {/* PAGINATION */}
@@ -148,10 +107,7 @@ const App: React.FC = () => {
       {/* MODAL */}
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
-          <NoteForm
-            onCreate={handleCreateNote}
-            onCancel={() => setIsModalOpen(false)}
-          />
+          <NoteForm onCancel={() => setIsModalOpen(false)} />
         </Modal>
       )}
 

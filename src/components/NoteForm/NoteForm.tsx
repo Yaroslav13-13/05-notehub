@@ -1,12 +1,12 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import css from "./NoteForm.module.css";
-import type { CreateNotePayload } from "../../services/noteService";
+import { createNote, type CreateNotePayload } from "../../services/noteService";
 import type { NoteTag } from "../../types/note";
 
 interface NoteFormProps {
-  onCreate: (payload: CreateNotePayload) => Promise<void> | void;
   onCancel: () => void;
 }
 
@@ -14,24 +14,32 @@ const noteTags: NoteTag[] = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 
 const schema = Yup.object().shape({
   title: Yup.string().required("Enter title"),
-  content: Yup.string().required("Enter content"),
+  content: Yup.string().max(1000, "Content must be less than 1000 characters"),
   tag: Yup.string()
     .oneOf(noteTags, "Select a valid tag")
     .required("Select a tag"),
 });
 
-const NoteForm: React.FC<NoteFormProps> = ({ onCreate, onCancel }) => {
+const NoteForm: React.FC<NoteFormProps> = ({ onCancel }) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: createNote,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      onCancel();
+    },
+  });
   return (
     <Formik
       initialValues={{ title: "", content: "", tag: "Todo" as NoteTag }}
       validationSchema={schema}
       onSubmit={async (values, { resetForm }) => {
-        await onCreate(values as CreateNotePayload);
+        await mutation.mutateAsync(values as CreateNotePayload);
         resetForm();
-        onCancel();
       }}
     >
-      {({ isSubmitting }) => (
+      {() => (
         <Form className={css.form}>
           <label className={css.formGroup}>
             Title
@@ -71,7 +79,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onCreate, onCancel }) => {
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={mutation.isPending}
               className={css.submitButton}
             >
               Create
