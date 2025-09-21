@@ -88,6 +88,11 @@ const App: React.FC = () => {
   const notes: Note[] = data?.notes ?? [];
   const totalPages: number = data?.totalPages ?? 0;
 
+  // ======= Скидання сторінки при зміні пошукового запиту =======
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch]);
+
   // ======= Автовидалення notification =======
   useEffect(() => {
     if (!notification) return;
