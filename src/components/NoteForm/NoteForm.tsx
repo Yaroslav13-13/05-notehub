@@ -13,8 +13,11 @@ interface NoteFormProps {
 const noteTags: NoteTag[] = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 
 const schema = Yup.object().shape({
-  title: Yup.string().required("Enter title"),
-  content: Yup.string().max(1000, "Content must be less than 1000 characters"),
+  title: Yup.string()
+    .min(3, "Title must be at least 3 characters")
+    .max(50, "Title must be at most 50 characters")
+    .required("Enter title"),
+  content: Yup.string().max(500, "Content must be less than 500 characters"),
   tag: Yup.string()
     .oneOf(noteTags, "Select a valid tag")
     .required("Select a tag"),
